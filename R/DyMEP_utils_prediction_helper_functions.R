@@ -83,3 +83,62 @@ permutations_fun <- function (n,
   }
   sub(n, r, v[1:n])
 }
+
+
+
+#' A function to download additional crop parameters
+#'
+#'@param external_params_path path where additional crop parameters should be
+#' stored if not possible to download in to the regular R repository. The
+#' default is NULL, which will use the regular R repository as path
+#' @importFrom utils download.file
+#' @importFrom utils unzip
+#' @keywords internal
+#' @export
+get_parameters <- function(external_params_path = NULL){
+  browser()
+  download_link <- "https://github.com/ftschurr/DyMEPparameter/archive/refs/heads/main.zip"
+
+  download_path <- file.path(system.file(package = "DyMEP"),"extdata")
+
+  if(!is.null(external_params_path)){
+    download_path <- external_params_path
+  }
+
+  # download file
+  try_output <- try(download.file(download_link,file.path(download_path,
+                                                        "DyMEPparameter.zip")))
+
+  if(try_output != 0){
+    stop("We tried to download remainign parameter infromation to: ",
+        download_path, " . However, we do not have permission to write files
+        here. Please either open the permissions for this folder, download
+        yourself the parameter from: https://github.com/ftschurr/DyMEPparameter/archive/refs/heads/main.zip
+        into this directory. Or as a last option provide via the
+        'external_params_path' argument a path where the parameters should be
+        stored. Please always put this infromation for further usage.
+        Sorry for this inconvenience, there are very strict size restriction in
+        place for R packages (: ")
+
+  }
+  # unzip file
+
+  unzip(file.path(download_path,"DyMEPparameter.zip"), exdir = download_path)
+  file_dest <- file.path(download_path,"pmem")
+  dir.create(file_dest,recursive = TRUE, showWarnings = FALSE)
+  crops <- list.dirs(file.path(download_path,"DyMEPparameter-main","extdata",
+                               "pmem"), full.names = FALSE)[-1]
+  # copy to the correct place
+  for(cr in crops){
+    momentary_path <- file.path(download_path,"DyMEPparameter-main","extdata",
+                                "pmem",cr)
+    file.copy(momentary_path,file_dest,recursive = TRUE)
+
+  }
+
+  # delte
+  unlink(file.path(download_path,"DyMEPparameter-main"), recursive=TRUE)
+  file.remove(file.path(download_path,"DyMEPparameter.zip"))
+}
+
+

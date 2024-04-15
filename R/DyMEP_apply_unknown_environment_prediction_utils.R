@@ -103,16 +103,29 @@ envpredutils.data_frame_to_list <- function(env_data_frame){
 #' @param crop_abbrev abbreviation of the crop
 #' @param pheno_phase phenological phase
 #' @param env_variables vector with the wanted environmental variables
+#' @param external_params_path path where additional crop parameters should be
+#' stored if not possible to download in to the regular R repository. The
+#' default is NULL, which will use the regular R repository as path
 #' @keywords internal
 #' @export
 #' @examples
 #' envpredutils.model_selecter("WW","sowing-emergence",c("tas"))
 envpredutils.model_selecter <- function(crop_abbrev,
                                         pheno_phase,
-                                        env_variables){
+                                        env_variables,
+                                        external_params_path = NULL){
 
-  all_models <- list.files(system.file("extdata","pmem",
-                                       crop_abbrev, package = "DyMEP"))
+  if(is.null(external_params_path)){
+    all_models <- list.files(system.file("extdata","pmem",
+                                         crop_abbrev, package = "DyMEP"))
+
+  }
+  else{
+    all_models <- list.files(file.path(external_params_path,"pmem",crop_abbrev))
+  }
+
+  # all_models <- DyMEPparameter::list_all_pmems_for_crop(crop_abbrev =
+  #                                                         crop_abbrev)
 
   pheno_phase_short <- paste(unlist(lapply(strsplit(pheno_phase,"-"),
                                            substr,0,1)),collapse="-")
@@ -227,6 +240,8 @@ envpredutils.pheno_phase_prediction_glm_model <- function( env_data_pheno_phase,
 
     file_name_best <- paste0(env_vari_model,"_",granularity,"_",pheno_phase,
                              "_best_response_curve_type.rds")
+
+
     best_curve <- readRDS(system.file("extdata","pbRC",crop_abbrev,
                                       file_name_best, package = "DyMEP"))
 

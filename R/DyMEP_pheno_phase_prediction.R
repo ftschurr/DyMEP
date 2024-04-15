@@ -7,18 +7,17 @@
 #' function to predict the a phenological phase in winter wheat
 #'
 #' predict one or all phenological phases
-#'@param phase_covariate_list list like: list("sowing-emergence" =
-#'c("tas","VPD","SPI"),
+#' @param phase_covariate_list list like: list("sowing-emergence" =
+#' c("tas","VPD","SPI"),
 #' "emergence-jointing" = c("tas"))
 #' indicating per phenological phase the covariates to use. List of
 #' of phenological phases must be consecutive!
-#'
-#'@param phase_starting_date starting date of the first phase which will be
-#'predicted (object of class "Date" (use as.Date()))
-#'@param environmental_data data.frame with the necessary environmental data,
+#' @param phase_starting_date starting date of the first phase which will be
+#' predicted (object of class "Date" (use as.Date()))
+#' @param environmental_data data.frame with the necessary environmental data,
 #' one column must be "DATE" (as.Date format), the others with the names of
 #' the environmental covariates (e.g. tas, tasmin etc.)
-#'@param crop_abbrev abbreviation of the crop to be modeled (valid crop_abbrevs
+#' @param crop_abbrev abbreviation of the crop to be modeled (valid crop_abbrevs
 #' can be found with available_crops_and_phases())
 #' @param output_type either "dates" or "detailed_information"; defines what
 #' output of the model they user wants to have as return,
@@ -28,34 +27,48 @@
 #' output = "dates" will return a dataframe with the stages and according dates
 #' output = "detailed_information" will return a list with the dates, but also
 #'  the corresponding dose response parameters and predictions
-#'@return returns the end-date of each phase
-#'@keywords phenology phase prediction
-#'@importFrom stats na.omit
+#' @param external_params_path path where additional crop parameters should be
+#' stored if not possible to download in to the regular R repository. The
+#' default is NULL, which will use the regular R repository as path
+#' @return returns the end-date of each phase
+#' @keywords phenology phase prediction
+#' @importFrom stats na.omit
 #' @export
 #' @examples
 #' pheno_phase_prediction(phase_covariate_list = list(
-#'         "sowing-emergence" = c("tasmin","VPD","SPI"),
-#'         "emergence-jointing"= c("tas","tasmin","VPD","SPI"),
-#'         "jointing-heading" = c("global_radiation","tas","SPI")),
-#'       environmental_data= data.frame(
-#'           "DATE"=seq.Date(from = as.Date("2021-01-01"),
-#'                           to = as.Date("2022-12-31"),by=1),
-#'           "tas"=runif(730,min=-10,max=40),
-#'           "tasmin"=runif(730,min=-10,max=40),
-#'           "VPD" = runif(730,min=-10,max=40),
-#'           "SPI"= runif(730,min=-1,max=4),
-#'           "global_radiation"= runif(730,min=0,max=10000)),
-#'       phase_starting_date =as.Date("2022-01-01"),
-#'       crop_abbrev = "WR")
+#'         "sowing-emergence" = c("tasmin","VPD","SPI","tasmax","tas","RH",
+#'         "global_radiation"),
+#'         "emergence-jointing"= c("tasmin","VPD","SPI","tasmax","tas","RH",
+#'         "global_radiation"),
+#'         "jointing-heading" = c("tasmin","VPD","SPI","tasmax","tas","RH",
+#'         "global_radiation")),
+#'     environmental_data <- data.frame("DATE" = seq.Date(
+#'               from = as.Date("2021-01-01"), to = as.Date("2023-12-31"),by=1),
+#'                           "tas"=runif(1095,min=-10,max=40),
+#'                            "RH"=runif(1095,min=0,max=100),
+#'                            "tasmin"=runif(1095,min=-10,max=40),
+#'                            "tasmax"=runif(1095,min=-5,max=40),
+#'                            "VPD" = runif(1095,min=0,max=40),
+#'                            "SPI"= runif(1095,min=-1,max=4),
+#'                            "global_radiation"= runif(1095,min=0,max=10000)),
+#'       phase_starting_date =as.Date("2021-01-01"),
+#'       crop_abbrev = "WW")
 pheno_phase_prediction <-  function(phase_covariate_list,
                                     environmental_data,
                                     phase_starting_date,
                                     crop_abbrev,
-                                    output_type = "dates"){
+                                    output_type = "dates",
+                                    external_params_path = NULL){
 
   # check if all the phases are written correctly
   phase_covariate_list <- predhelp.check_pheno_phase_order(phase_covariate_list,
                                                            crop_abbrev)
+
+  if(!dir.exists(file.path(system.file(package = "DyMEP"),"extdata","pmem",
+                           crop_abbrev))){
+    get_parameters(external_params_path = external_params_path)
+  }
+
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   # check the user inputs
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,7 +79,8 @@ pheno_phase_prediction <-  function(phase_covariate_list,
 
   if(!(output_type %in% c("dates","detailed_information"))){
 
-    stop("please select as output_type either 'dates' or 'detailed_information' and try again.")
+    stop("please select as output_type either 'dates' or 'detailed_information'
+         and try again.")
 
   }
   if(!any(names(environmental_data) %in% c("DATE"))){
@@ -116,11 +130,19 @@ pheno_phase_prediction <-  function(phase_covariate_list,
     # find correct model
     model_name <- envpredutils.model_selecter(crop_abbrev,
                                               pheno_phase,
-                                            phase_covariate_list[[pheno_phase]])
+                                            phase_covariate_list[[pheno_phase]],
+                                            external_params_path =
+                                              external_params_path)
 
     # load correct model
-    model <- readRDS(system.file("extdata","pmem",crop_abbrev,
-                                 model_name, package = "DyMEP"))
+    if(is.null(external_params_path)){
+
+        model <- readRDS(system.file("extdata","pmem",crop_abbrev,
+                                     model_name, package = "DyMEP"))
+    }else{
+      model <- readRDS(file.path(external_params_path,"pmem",crop_abbrev,
+                                   model_name))
+    }
 
     # cut period
     env_period <- envpredutils.env_period_cutter(start_date = start_date,

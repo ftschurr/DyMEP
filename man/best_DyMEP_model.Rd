@@ -39,9 +39,17 @@ return_just_best also as TRUE if this output is wished}
 \description{
 A function to get the best model with the environmental covariates at hand
 }
+\section{Fields}{
+
+\describe{
+\item{\code{abbrev}}{Description of crop_abbrev column.}
+
+\item{\code{pheno_phase}}{Description of pheno_phase column.}
+}}
+
 \examples{
 best_DyMEP_model(env_covariates =  c("tas","VPD"),
       pheno_phases = c("sowing-emergence"),
-      crop_abbrev = "GB")
+      crop_abbrev = "WW")
 }
 \keyword{internal}

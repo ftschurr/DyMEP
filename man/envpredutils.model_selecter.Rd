@@ -5,7 +5,12 @@
 \alias{envpredutils.model_selecter}
 \title{A function to get the wanted model}
 \usage{
-envpredutils.model_selecter(crop_abbrev, pheno_phase, env_variables)
+envpredutils.model_selecter(
+  crop_abbrev,
+  pheno_phase,
+  env_variables,
+  external_params_path = NULL
+)
 }
 \arguments{
 \item{crop_abbrev}{abbreviation of the crop}
@@ -13,6 +18,10 @@ envpredutils.model_selecter(crop_abbrev, pheno_phase, env_variables)
 \item{pheno_phase}{phenological phase}
 
 \item{env_variables}{vector with the wanted environmental variables}
+
+\item{external_params_path}{path where additional crop parameters should be
+stored if not possible to download in to the regular R repository. The
+default is NULL, which will use the regular R repository as path}
 }
 \description{
 A function to get the wanted model

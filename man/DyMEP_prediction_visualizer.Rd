@@ -18,12 +18,18 @@ A plot with one panel per phenology phase, showing the environmental
 \description{
 Visualizes the predictions of the DyMEP model.
 }
+\section{Fields}{
+
+\describe{
+\item{\code{timestamp}}{Description of timestamp column.}
+}}
+
 \examples{
 phase_covariate_list <- best_DyMEP_model(env_covariates =
              c("tas","tasmin","VPD","SPI","global_radiation","tasmax","RH"),
            pheno_phases = c("sowing-emergence","emergence-jointing",
            "jointing-heading"),
-                                        crop_abbrev = "WB",
+                                        crop_abbrev = "WW",
                                         output_list_for_prediction = TRUE)
 
 # Create dummy environmental data
@@ -42,7 +48,7 @@ DyMEP_prediction_visualizer(detailed_output = pheno_phase_prediction(
                                  phase_covariate_list = phase_covariate_list,
                                  environmental_data = environmental_data,
                                  phase_starting_date = as.Date("2021-01-01"),
-                                 crop_abbrev = "WR",
+                                 crop_abbrev = "WW",
                                  output_type = "detailed_information"))
 
 }

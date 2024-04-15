@@ -14,9 +14,15 @@ predhelp.check_pheno_phase_order(phase_covariate_list, crop_abbrev)
 \description{
 predhelp.check_pheno_phase_order
 }
+\section{Fields}{
+
+\describe{
+\item{\code{abbrev}}{Description of crop_abbrev column.}
+}}
+
 \examples{
 predhelp.check_pheno_phase_order(phase_covariate_list = list(
   "sowing-emergence" = c("tasmin","VPD","SPI")),
-  crop_abbrev = "GB")
+  crop_abbrev = "WW")
 }
 \keyword{internal}

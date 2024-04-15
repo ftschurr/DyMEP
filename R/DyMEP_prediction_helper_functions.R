@@ -22,13 +22,15 @@
 #' of this function is a list which can directly be used for the
 #' pheno_phase_prediction function as input (phase_covariate_list). Select
 #' return_just_best also as TRUE if this output is wished
+#' @field abbrev Description of crop_abbrev column.
+#' @field pheno_phase Description of pheno_phase column.
 #' @keywords internal
 #' @importFrom utils read.csv
 #' @export
 #' @examples
 #' best_DyMEP_model(env_covariates =  c("tas","VPD"),
 #'       pheno_phases = c("sowing-emergence"),
-#'       crop_abbrev = "GB")
+#'       crop_abbrev = "WW")
 
 best_DyMEP_model  <- function(env_covariates,
                                     pheno_phases,
@@ -44,31 +46,32 @@ best_DyMEP_model  <- function(env_covariates,
   }
 
 
-
+  abbrev <- NA
+  pheno_phase <- NA
   # Load data from an .rds file in the package
   all_available_crops_and_pheno_phases <- read.csv(
     system.file("extdata","meta","crop_pheno_phase_description_DWD.csv",
                 package = "DyMEP"))
 
 
-  if(length(which(unique(all_available_crops_and_pheno_phases$abbrev)== crop_abbrev))<1){
+  if(length(which(unique(all_available_crops_and_pheno_phases[["abbrev"]])== crop_abbrev))<1){
     stop(paste0("your crop: ",crop_abbrev," is not available in this model
                  please select one of the following: ",
-                paste(unique(all_available_crops_and_pheno_phases$abbrev),
+                paste(unique(all_available_crops_and_pheno_phases[["abbrev"]]),
                       collapse=" ")," ; for futher
                 information check the available_crops_and_phases()
                 function." ))
   }
 
 
-  phases_crop <- subset(all_available_crops_and_pheno_phases, abbrev ==
+  phases_crop <- subset(all_available_crops_and_pheno_phases, `abbrev` ==
                           crop_abbrev)
 
-  if(length(!which(phases_crop$pheno_phase %in% pheno_phases)) != length(pheno_phases)){
+  if(length(!which(phases_crop[["pheno_phase"]] %in% pheno_phases)) != length(pheno_phases)){
     stop(paste0("One or multiple of your input pheno phase are not available.
                 You entered: ", paste(pheno_phases,collapse=" "),
                 " the available list is: " ,paste(
-                  phases_crop$pheno_phase,collapse=" ")," ; for futher
+                  phases_crop[["pheno_phase"]],collapse=" ")," ; for futher
                 information check the available_crops_and_phases()
                 function."))
   }
@@ -114,7 +117,7 @@ your_environmental_covariates_permutations <-predhelputils.get_all_permutations(
   best_available_model <- list()
 
   for(pheno_ph in pheno_phases){
-    one_pheno_skillscores <- subset(all_skillscores, pheno_phase == pheno_ph)
+    one_pheno_skillscores <- subset(all_skillscores, `pheno_phase` == pheno_ph)
     all_available_models[[pheno_ph]] <- one_pheno_skillscores[which(
       one_pheno_skillscores$env_variables %in%
         your_environmental_covariates_permutations),]
@@ -226,13 +229,14 @@ available_environmental_covariates <- function(){
 #'
 #' @param phase_covariate_list list with all available phenology phases
 #' @param crop_abbrev current crop_abbrev (name of the crop)
+#' @field abbrev Description of crop_abbrev column.
 #' @keywords internal
 #' @importFrom utils read.csv
 #' @export
 #' @examples
 #' predhelp.check_pheno_phase_order(phase_covariate_list = list(
 #'   "sowing-emergence" = c("tasmin","VPD","SPI")),
-#'   crop_abbrev = "GB")
+#'   crop_abbrev = "WW")
 
 predhelp.check_pheno_phase_order <- function(phase_covariate_list,crop_abbrev){
   pheno_phases <- names(phase_covariate_list)
@@ -244,25 +248,27 @@ predhelp.check_pheno_phase_order <- function(phase_covariate_list,crop_abbrev){
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   # check the user inputs
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  timestamp <- NA
+  abbrev <- NA
 
-  if(length(which(unique(all_available_crops_and_pheno_phases$abbrev)== crop_abbrev))<1){
+  if(length(which(unique(all_available_crops_and_pheno_phases[["abbrev"]])== crop_abbrev))<1){
     stop(paste0("your crop: ",crop_abbrev," is not available in this model
                  please select one of the following: ",
-                paste(unique(all_available_crops_and_pheno_phases$abbrev),
+                paste(unique(all_available_crops_and_pheno_phases[["abbrev"]]),
                       collapse=" ") ))
   }
 
-  phases_crop <- subset(all_available_crops_and_pheno_phases, abbrev ==
+  phases_crop <- subset(all_available_crops_and_pheno_phases, `abbrev` ==
                           crop_abbrev)
 
-  if(length(!which(phases_crop$pheno_phase %in% pheno_phases)) != length(pheno_phases)){
+  if(length(!which(phases_crop[["pheno_phase"]] %in% pheno_phases)) != length(pheno_phases)){
     stop(paste0("One or multiple of you input pheno phase are not available.
                 You entered: ", paste(pheno_phases,collapse=" "),
                 " the available list is: " ,paste(
-                  phases_crop$pheno_phase,collapse=" ")))
+                  phases_crop[["pheno_phase"]],collapse=" ")))
   }
 
-  entry_numbers <- which(phases_crop$pheno_phase %in% pheno_phases)
+  entry_numbers <- which(phases_crop[["pheno_phase"]] %in% pheno_phases)
 
   # check if phases are consecutive
   if(any(diff(entry_numbers) >1)){
@@ -279,7 +285,7 @@ predhelp.check_pheno_phase_order <- function(phase_covariate_list,crop_abbrev){
   order_checker <- c()
   counter <- 1
   for(p in pheno_phases){
-    order_checker[counter] <- which(phases_crop$pheno_phase == p)
+    order_checker[counter] <- which(phases_crop[["pheno_phase"]] == p)
     counter <- counter + 1
   }
 
@@ -297,4 +303,8 @@ predhelp.check_pheno_phase_order <- function(phase_covariate_list,crop_abbrev){
 
   return(phase_covariate_list)
   }
+
+
+
+
 

@@ -16,6 +16,7 @@
 #'         (points).
 #'
 #' @keywords visualization
+#' @field timestamp Description of timestamp column.
 #'
 #' @importFrom graphics abline
 #' @importFrom graphics legend
@@ -27,7 +28,7 @@
 #'              c("tas","tasmin","VPD","SPI","global_radiation","tasmax","RH"),
 #'            pheno_phases = c("sowing-emergence","emergence-jointing",
 #'            "jointing-heading"),
-#'                                         crop_abbrev = "WB",
+#'                                         crop_abbrev = "WW",
 #'                                         output_list_for_prediction = TRUE)
 #'
 #' # Create dummy environmental data
@@ -46,7 +47,7 @@
 #'                                  phase_covariate_list = phase_covariate_list,
 #'                                  environmental_data = environmental_data,
 #'                                  phase_starting_date = as.Date("2021-01-01"),
-#'                                  crop_abbrev = "WR",
+#'                                  crop_abbrev = "WW",
 #'                                  output_type = "detailed_information"))
 #'
 DyMEP_prediction_visualizer <- function(detailed_output){
@@ -61,7 +62,7 @@ DyMEP_prediction_visualizer <- function(detailed_output){
     stop("please provide the direct output of the pheno_phase_prediction
          function withoutput_type = 'detailed_information', thank you!")
   }
-
+  timestamp <- NA
 
   available_env_coviariates <- available_environmental_covariates()
 
@@ -73,7 +74,7 @@ DyMEP_prediction_visualizer <- function(detailed_output){
   par(mar = c(5, 6, 4, 2) + 0.1)
   for (phase in names(detailed_output$detailled_output)) {
     data <- detailed_output$detailled_output[[phase]]$DRC_and_phase_prediction
-    data <- subset(data, timestamp <=
+    data <- subset(data, `timestamp` <=
                      as.Date(detailed_output$detailled_output[[phase]]$end_date)+10 )
 
     env_covariates <- names(data)[names(data) %in%
@@ -133,7 +134,7 @@ DyMEP_prediction_visualizer <- function(detailed_output){
 #' phase_covariate_list <- best_DyMEP_model(env_covariates =
 #' c("tas","tasmin","VPD","SPI","global_radiation","tasmax","RH"),
 #' pheno_phases = c("sowing-emergence","emergence-jointing","jointing-heading"),
-#' crop_abbrev = "WB",
+#' crop_abbrev = "WW",
 #' output_list_for_prediction = TRUE)
 #' # create dummy environmental data
 #' environmental_data<- data.frame("DATE"=seq.Date(from = as.Date("2021-01-01"),
@@ -150,7 +151,7 @@ DyMEP_prediction_visualizer <- function(detailed_output){
 #' phase_covariate_list = phase_covariate_list,
 #' environmental_data = environmental_data,
 #' phase_starting_date =as.Date("2021-01-01"),
-#'crop_abbrev = "WR",
+#'crop_abbrev = "WW",
 #' output_type = "detailed_information")
 #' )
 DyMEP_DRC_visualizer <- function(detailed_output){

@@ -17,7 +17,7 @@
 #'best_DyMEP_model(env_covariates = c("tas","tasmin","VPD","SPI",
 #' "global_radiation","tasmax","RH"),
 #'                 pheno_phases = c("sowing-emergence","jointing-heading"),
-#'                 crop_abbrev = "WB")
+#'                 crop_abbrev = "WW")
 #'# create a list of wanted phases and corresponding environmental covariates
 #' phase_covariate_list <- list("sowing-emergence" = c("tasmin","VPD","SPI"),
 #'                          "emergence-jointing"= c("tas","tasmin","VPD","SPI"),
@@ -28,7 +28,7 @@
 #'phase_covariate_list <- best_DyMEP_model(env_covariates =
 #'c("tas","tasmin","VPD","SPI","global_radiation","tasmax","RH"),
 #'pheno_phases = c("sowing-emergence","emergence-jointing","jointing-heading"),
-#'crop_abbrev = "WB",
+#'crop_abbrev = "WW",
 #'output_list_for_prediction = TRUE)
 #'
 #'
@@ -47,7 +47,7 @@
 #' pheno_phase_prediction(phase_covariate_list = phase_covariate_list,
 #'                       environmental_data = environmental_data,
 #'                       phase_starting_date =as.Date("2021-01-01"),
-#'                       crop_abbrev = "WR")
+#'                       crop_abbrev = "WW")
 #'
 #'  # you can also get a more detailed output, containing detailed predictions
 #'  # and the parameters of the used DRC curves:
@@ -55,7 +55,7 @@
 #'             phase_covariate_list = phase_covariate_list,
 #'             environmental_data = environmental_data,
 #'             phase_starting_date =as.Date("2021-01-01"),
-#'             crop_abbrev = "WR",
+#'             crop_abbrev = "WW",
 #'             output_type = "detailed_information")
 #'
 #'  #  this output can be visualised like:
