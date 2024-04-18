@@ -15,6 +15,7 @@
 #'slope of the linear phase
 #'@description linear model according to an env variable
 #'@keywords DRC
+#' @return value with reg_linear response
 #'@export
 #'@examples
 #'reg_linear_prediction(1,list("intercept_value"=1, "slope_value"=5))
@@ -45,6 +46,7 @@ reg_linear_prediction <- function(env_variate,params){
 #' slope estimated value, slope of the linear phase
 #'@description broken stick model according to an env variable
 #'@keywords DRC
+#' @return value with non_linear response
 #'@export
 #'@examples
 #'non_linear_prediction(1,list("base_value"=5,"slope_value"=1))
@@ -81,6 +83,7 @@ non_linear_prediction <- function(env_variate,params){
 #'  logarithm of the rate constant;
 #'  c0  	a numeric parameter representing the x for which the response is zero.
 #'@keywords DRC
+#' @return value with asymptotic response
 #'@importFrom stats SSasympOff
 #'@export
 #'@examples
@@ -117,6 +120,7 @@ asymptotic_prediction <- function(x, params){
 #'  xmax_value represents the maximal env_variable value above which no growth
 #'  response will happen according to the wang engel model.
 #'@keywords DRC
+#' @return value with WangEngels response
 #'@export
 #'@examples
 #'WangEngels_prediction(10, params = list("xmin_value"=1,

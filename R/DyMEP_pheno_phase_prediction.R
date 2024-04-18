@@ -33,6 +33,8 @@
 #' @return returns the end-date of each phase
 #' @keywords phenology phase prediction
 #' @importFrom stats na.omit
+#' @return either return an object of class 'DyMEP', if detailed_information is
+#'  selected as output_type, from a dataframe containing phenology data, or
 #' @export
 #' @examples
 #' pheno_phase_prediction(phase_covariate_list = list(
@@ -66,6 +68,23 @@ pheno_phase_prediction <-  function(phase_covariate_list,
 
   if(!dir.exists(file.path(system.file(package = "DyMEP"),"extdata","pmem",
                            crop_abbrev))){
+    if(is.null(external_params_path)){
+      download_path <- file.path(system.file(package = "DyMEP"),"extdata")
+
+      stop(cat("Dear User, you need to access additional parameters. These are
+               stored in a git:
+      <https://github.com/ftschurr/DyMEPparameter/archive/refs/heads/main.zip>.
+       If you want to include them into the package please call the function:
+      get_parameters(",download_path,") . If you however have not writing
+      permission for the given folder. Either change the permissions,
+      or provide to the 'pheno_phase_prediction' function the argument
+      'external_params_path' to a directory you have writing permissions. For
+      the further usage of DyMEP you should in this case provide always the
+      'external_params_path' as an argument.
+      Thank you, and happy using, your maintainer :)
+      "
+      ))
+    }
     get_parameters(external_params_path = external_params_path)
   }
 

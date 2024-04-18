@@ -31,6 +31,11 @@ output = "dates" will return a dataframe with the stages and according dates
 output = "detailed_information" will return a list with the dates, but also
  the corresponding dose response parameters and predictions}
 }
+\value{
+final output, either detailed (if output_type =
+"detailed_information") as list, or data.frame with dates if
+output_type = "dates"
+}
 \description{
 apply the prediction with glm model
 }

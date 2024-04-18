@@ -14,6 +14,7 @@
 #' @param object An object of class "DyMEP".
 #' @param ... Additional arguments to be passed to summary functions.
 #' @keywords internal
+#' @return print directly into console
 #' @export
 summary <- function(object, ...) {
   UseMethod("summary", object)

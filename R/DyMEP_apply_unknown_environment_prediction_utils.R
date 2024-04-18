@@ -10,6 +10,7 @@
 #' @param period_length length of the period
 #' @keywords internal
 #' @export
+#' @return sequence of dates
 #' @examples
 #' envpredutils.period_date_creator(as.Date("2024-01-15"),100)
 envpredutils.period_date_creator <- function(start_date, period_length){
@@ -27,6 +28,7 @@ envpredutils.period_date_creator <- function(start_date, period_length){
 #'  less days will be considered
 #' @keywords internal
 #' @export
+#' @return list with cut environmental covariates for the given period
 #' @examples
 #' envpredutils.env_period_cutter(Sys.Date(),
 #' c("tas"), list("tas"=data.frame("DATE"= seq(as.Date(Sys.Date()),
@@ -73,8 +75,9 @@ envpredutils.env_period_cutter <- function(start_date, env_variables,
 #' @param env_data_frame data.frame with the necessary environmental data,
 #'  one column must be "DATE" (as.Date format), the others with the names
 #'   of the environmental covariates (e.g. tas, tasmin etc.)
-#'@keywords internal
+#' @keywords internal
 #' @export
+#' @return list for later glm prediction
 #' @examples envpredutils.data_frame_to_list(data.frame("tas"=c(1:100),
 #'  "VPD"=c(1:100), "DATE"=c(1:100)))
 
@@ -108,6 +111,7 @@ envpredutils.data_frame_to_list <- function(env_data_frame){
 #' default is NULL, which will use the regular R repository as path
 #' @keywords internal
 #' @export
+#' @return model name from pre fitted models
 #' @examples
 #' envpredutils.model_selecter("WW","sowing-emergence",c("tas"))
 envpredutils.model_selecter <- function(crop_abbrev,
@@ -146,6 +150,7 @@ envpredutils.model_selecter <- function(crop_abbrev,
 #' @param .response_function. dose response function
 #' @param parameters parameters of the response function
 #' @export
+#' @return returns vector with cumulative sum
 #' @keywords  internal
 
 envpredutils.cumulative_dose_response_pred_helper <- function(env_data_vector,
@@ -171,6 +176,7 @@ envpredutils.cumulative_dose_response_pred_helper <- function(env_data_vector,
 #' @param timestamp_vect vector with timestamps
 #' @export
 #' @keywords internal
+#' @return data.frame for glm prediction
 #' @examples
 #' envpredutils.GLM_prediction_df_creator(list("tas"=list("growth_cumulative"=
 #'                                     c(1))),timestamp_vect = Sys.Date())
@@ -219,6 +225,9 @@ envpredutils.GLM_prediction_df_creator <- function(resposne_predictions,
 #' output = "dates" will return a dataframe with the stages and according dates
 #' output = "detailed_information" will return a list with the dates, but also
 #'  the corresponding dose response parameters and predictions
+#' @return final output, either detailed (if output_type =
+#' "detailed_information") as list, or data.frame with dates if
+#' output_type = "dates"
 #' @importFrom stats predict.glm
 #' @keywords phase prediction glm
 #' @export

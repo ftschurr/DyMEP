@@ -12,6 +12,9 @@ reg_linear_prediction(env_variate, params)
 \item{params}{list of input parameter; intercept estimated value,
 slope of the linear phase}
 }
+\value{
+value with reg_linear response
+}
 \description{
 linear model according to an env variable
 }

@@ -16,6 +16,9 @@ xopt_value: optimal growth point, env_variable values here have the highest
 xmax_value represents the maximal env_variable value above which no growth
 response will happen according to the wang engel model.}
 }
+\value{
+value with WangEngels response
+}
 \description{
 DRC function: WangEngels_prediction
 }

@@ -45,6 +45,9 @@ default is NULL, which will use the regular R repository as path}
 }
 \value{
 returns the end-date of each phase
+
+either return an object of class 'DyMEP', if detailed_information is
+ selected as output_type, from a dataframe containing phenology data, or
 }
 \description{
 predict one or all phenological phases

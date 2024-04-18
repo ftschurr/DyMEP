@@ -6,6 +6,9 @@
 \usage{
 available_crops_and_phases()
 }
+\value{
+dataframe with available crops and phenology phases
+}
 \description{
 check what crops and corresponding phenology phases are available at the
  moment. Chose a crop (crop_abbrev), phenological phase from the output of

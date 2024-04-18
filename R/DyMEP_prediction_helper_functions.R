@@ -26,6 +26,7 @@
 #' @field pheno_phase Description of pheno_phase column.
 #' @keywords internal
 #' @importFrom utils read.csv
+#' @return dataframe with the best models selected for the given input arguments
 #' @export
 #' @examples
 #' best_DyMEP_model(env_covariates =  c("tas","VPD"),
@@ -183,6 +184,7 @@ your_environmental_covariates_permutations <-predhelputils.get_all_permutations(
 #'
 #' @keywords check what crops and corresponding phenology phases are available
 #' @export
+#' @return dataframe with available crops and phenology phases
 #' @importFrom utils read.csv
 #' @examples
 #' available_crops_and_phases()
@@ -209,6 +211,7 @@ available_crops_and_phases <- function(){
 #'
 #' @keywords check what environmental covariates are implemented
 #' @export
+#' @return dataframe with available environmental covariates
 #' @importFrom utils read.csv
 #' @examples
 #' available_environmental_covariates()
@@ -232,6 +235,8 @@ available_environmental_covariates <- function(){
 #' @field abbrev Description of crop_abbrev column.
 #' @keywords internal
 #' @importFrom utils read.csv
+#' @return returns the given phase_covariate_list but with correctly ordered
+#' phenology phases
 #' @export
 #' @examples
 #' predhelp.check_pheno_phase_order(phase_covariate_list = list(

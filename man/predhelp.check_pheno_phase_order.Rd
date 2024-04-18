@@ -11,6 +11,10 @@ predhelp.check_pheno_phase_order(phase_covariate_list, crop_abbrev)
 
 \item{crop_abbrev}{current crop_abbrev (name of the crop)}
 }
+\value{
+returns the given phase_covariate_list but with correctly ordered
+phenology phases
+}
 \description{
 predhelp.check_pheno_phase_order
 }

@@ -23,6 +23,9 @@ envpredutils.env_period_cutter(
 amount of days will be considered (default = 300); if less data available,
 less days will be considered}
 }
+\value{
+list with cut environmental covariates for the given period
+}
 \description{
 A function to cut the environmental data into the correct length
 }

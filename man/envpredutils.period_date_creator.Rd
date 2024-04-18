@@ -12,6 +12,9 @@ envpredutils.period_date_creator(start_date, period_length)
 
 \item{period_length}{length of the period}
 }
+\value{
+sequence of dates
+}
 \description{
 A function to create a date vector
 }

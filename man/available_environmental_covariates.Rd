@@ -8,6 +8,9 @@ check what environmental covariates are implemented, use or alter prediction
 \usage{
 available_environmental_covariates()
 }
+\value{
+dataframe with available environmental covariates
+}
 \description{
 available_environmental_covariates
 check what environmental covariates are implemented, use or alter prediction

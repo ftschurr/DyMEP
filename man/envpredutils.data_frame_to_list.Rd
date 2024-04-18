@@ -12,6 +12,9 @@ envpredutils.data_frame_to_list(env_data_frame)
 one column must be "DATE" (as.Date format), the others with the names
  of the environmental covariates (e.g. tas, tasmin etc.)}
 }
+\value{
+list for later glm prediction
+}
 \description{
 A function to get the best model with the covariates at hand
 }

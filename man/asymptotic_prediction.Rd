@@ -16,6 +16,9 @@ lrc     a numeric parameter representing the natural
  logarithm of the rate constant;
  c0      a numeric parameter representing the x for which the response is zero.}
 }
+\value{
+value with asymptotic response
+}
 \description{
 DRC function: asymptotic_prediction
 }

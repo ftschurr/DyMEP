@@ -18,6 +18,9 @@ envpredutils.cumulative_dose_response_pred_helper(
 
 \item{parameters}{parameters of the response function}
 }
+\value{
+returns vector with cumulative sum
+}
 \description{
 wrapper function to apply the response_prediction
 function in a "weighted" manner and do some gap filling of the env data

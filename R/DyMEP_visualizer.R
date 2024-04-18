@@ -69,6 +69,10 @@ DyMEP_prediction_visualizer <- function(detailed_output){
   env_colors <- c("#0173b2", "#de8f05", "#029e73", "#d55e00", "#cc78bc", "#ca9161", "#fbafe4")
   names(env_colors) <- available_env_coviariates$env_covariate
   # visualize the predictions DRC curves
+  # protect starting pars
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
   # set par to match the number of phenology phases
   par(mfrow=c(length(names(detailed_output$detailled_output)),1))
   par(mar = c(5, 6, 4, 2) + 0.1)
@@ -168,6 +172,9 @@ DyMEP_DRC_visualizer <- function(detailed_output){
          function withoutput_type = 'detailed_information', thank you!")
   }
 
+  # protect starting pars
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
 
   available_env_coviariates <- available_environmental_covariates()
 

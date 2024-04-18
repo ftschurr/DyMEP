@@ -11,6 +11,9 @@ get_parameters(external_params_path = NULL)
 stored if not possible to download in to the regular R repository. The
 default is NULL, which will use the regular R repository as path}
 }
+\value{
+no return
+}
 \description{
 A function to download additional crop parameters
 }

@@ -11,6 +11,9 @@ predhelputils.get_all_permutations(your_environmental_covariates)
 have at hand (tas, tasmax, tasmin, RH, VPD, SPI, global_radiation are
  available)}
 }
+\value{
+provides all potential permutations given your input vector
+}
 \description{
 A function to get all potential permutations
 }

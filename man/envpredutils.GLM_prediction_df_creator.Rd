@@ -12,6 +12,9 @@ envpredutils.GLM_prediction_df_creator(resposne_predictions, timestamp_vect)
 
 \item{timestamp_vect}{vector with timestamps}
 }
+\value{
+data.frame for glm prediction
+}
 \description{
 create DF suitable to predict with GLM
 }

@@ -11,6 +11,9 @@ summary(object, ...)
 
 \item{...}{Additional arguments to be passed to summary functions.}
 }
+\value{
+print directly into console
+}
 \description{
 This function summarizes DyMEP objects.
 }

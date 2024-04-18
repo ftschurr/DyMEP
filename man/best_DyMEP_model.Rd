@@ -36,6 +36,9 @@ of this function is a list which can directly be used for the
 pheno_phase_prediction function as input (phase_covariate_list). Select
 return_just_best also as TRUE if this output is wished}
 }
+\value{
+dataframe with the best models selected for the given input arguments
+}
 \description{
 A function to get the best model with the environmental covariates at hand
 }

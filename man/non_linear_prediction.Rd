@@ -12,6 +12,9 @@ non_linear_prediction(env_variate, params)
 \item{params}{list of input parameter; base_value: minimal value;
 slope estimated value, slope of the linear phase}
 }
+\value{
+value with non_linear response
+}
 \description{
 broken stick model according to an env variable
 }

@@ -23,6 +23,9 @@ envpredutils.model_selecter(
 stored if not possible to download in to the regular R repository. The
 default is NULL, which will use the regular R repository as path}
 }
+\value{
+model name from pre fitted models
+}
 \description{
 A function to get the wanted model
 }
