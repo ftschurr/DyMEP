@@ -102,7 +102,7 @@ get_parameters <- function(external_params_path = NULL){
 
   path_params_dymep <- file.path(system.file(package = "DyMEP"),"extdata")
 
-  if(!is.null(external_params_path)){
+  if(is.null(external_params_path)){
     stop(cat("please provide an external_params_path, if you dont have
              parameters of multiple crops here: ",path_params_dymep))
   }

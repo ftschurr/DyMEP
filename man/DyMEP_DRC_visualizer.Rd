@@ -33,7 +33,7 @@ environmental_data<- data.frame("DATE"=seq.Date(from = as.Date("2021-01-01"),
                                 "tasmax"=runif(1095,min=0,max=40),
                                 "VPD" = runif(1095,min=0,max=40),
                                 "SPI"= runif(1095,min=-1,max=4),
-                             "global_radiation"= runif(1095,min=0,max=10000))
+                             "global_radiation"= runif(1095,min=0,max=3500))
 
 DyMEP_DRC_visualizer(detailed_output = pheno_phase_prediction(
 phase_covariate_list = phase_covariate_list,

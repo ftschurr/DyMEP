@@ -52,7 +52,7 @@
 #'                            "tasmax"=runif(1095,min=-5,max=40),
 #'                            "VPD" = runif(1095,min=0,max=40),
 #'                            "SPI"= runif(1095,min=-1,max=4),
-#'                            "global_radiation"= runif(1095,min=0,max=10000)),
+#'                            "global_radiation"= runif(1095,min=0,max=3500)),
 #'       phase_starting_date =as.Date("2021-01-01"),
 #'       crop_abbrev = "WW")
 pheno_phase_prediction <-  function(phase_covariate_list,
@@ -75,15 +75,15 @@ pheno_phase_prediction <-  function(phase_covariate_list,
                stored in a git:
       <https://github.com/ftschurr/DyMEPparameter/archive/refs/heads/main.zip>.
        If you want to include them into the package please call the function:
-      get_parameters(",download_path,") . If you however have not writing
-      permission for the given folder. Either change the permissions,
-      or provide to the 'pheno_phase_prediction' function the argument
-      'external_params_path' to a directory you have writing permissions. For
-      the further usage of DyMEP you should in this case provide always the
-      'external_params_path' as an argument.
+      get_parameters(external_params_path = '",download_path,"') . If you
+      however have not writing permission for the given folder. Either change
+      the permissions, or provide to the 'pheno_phase_prediction' function the
+      argument 'external_params_path' to a directory you have writing
+      permissions. For the further usage of DyMEP you should in this case
+      provide always the 'external_params_path' as an argument.
       Thank you, and happy using, your maintainer :)
       "
-      ))
+      ,sep=""))
     }
     get_parameters(external_params_path = external_params_path)
   }

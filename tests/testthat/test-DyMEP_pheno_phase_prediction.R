@@ -12,7 +12,7 @@ test_that("test pheno_phase_prediction",{
       "tasmax"=runif(1095,min=-5,max=40),
       "VPD" = runif(1095,min=0,max=40),
       "SPI"= runif(1095,min=-1,max=4),
-      "global_radiation"= runif(1095,min=0,max=10000)),
+      "global_radiation"= runif(1095,min=0,max=3500)),
     phase_starting_date =as.Date("2021-01-01"),
     crop_abbrev = "WW"),
               "list")
